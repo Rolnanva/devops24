@@ -81,6 +81,10 @@ What does the output look like the first time you run this playbook?
 
 What does the output look like the second time you run this playbook?
 
+Answer:
+
+The first time you run you get the keys and values of the contents that were put in `05-web.yml` and in the beginning you see `"changed": true`while the second time it's the same but it changes to `changed: false`
+
 # QUESTION B
 
 Even if we have copied the configuration to the right place, we still do not have a working https service
@@ -121,10 +125,17 @@ a self signed certificate.
 
 # QUESTION C
 
-What is the disadvantage of having a task that _always_ makes sure a service is restarted, even if there is
-no configuration change?
+What is the disadvantage of having a task that _always_ makes sure a service is restarted, even if there is no configuration change?
+
+Answer:
+
+The disadvantage of having a always restarting service is that it can cause uneccesary resource consumption and can have unnecessary downtime/service distruption.
 
 # BONUS QUESTION
 
 There are at least two _other_ modules, in addition to the `ansible.builtin.service` module that can restart
 a `systemd` service with Ansible. Which modules are they?
+
+* ansible.builtin.systemd_service
+
+* ansible.builtin.command
