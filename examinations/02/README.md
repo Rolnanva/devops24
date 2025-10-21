@@ -112,11 +112,15 @@ incompatibilities.
 
 What happens if you run `ansible-inventory --list` in the directory you created above?
 
+Answer:
+
 When I run the command above I get a output of the contents on my hosts files and further down are the IP Adresses for my hosts and their names in a JSON format.
 
 ## QUESTION B
 
 What happens if you run `ansible-inventory --graph` in the directory you created above?
+
+Answer:
 
 When I run the command above I get a ASCII Tree of my VMs and what they are grouped to.
 
@@ -147,6 +151,8 @@ When adding the new line to the **hosts** file and the running the ping command 
 
 What does the `ansible_connection=local` part mean?
 
+Answer:
+
 the command above is telling **Ansible** to run the command locally on the machine and not  through SSH.
 
 ## BONUS QUESTION
@@ -169,6 +175,8 @@ In your Ansible working directory where the `ansible.cfg' is, run
 
 You should get a pager displaying all available configuration values. How does it differ
 from when you run the same command in your usual home directory?
+
+Answer:
 
 When you run the command in the directory with the cfg file the line with ```DEFAULT_HOST_LIST``` has the path to the directory with the cfg file while running the command in another directory will have the path as ```/etc/ansible/hosts```
 
