@@ -121,9 +121,15 @@ Run the exact same playbook again and study the output. What is the difference?
 
 What does the `ansible.builtin.debug` module actually do?
 
+the module prints statements during execution to help debug variables or expressions without halting the playbook and can be paired with the ``` when:``` directive.
+
 ## QUESTION B
 
 What is the variable 'ansible_facts' and where does it come from?
+
+```ansible_facts``` is data related to your system from your operating systems,IP Adresses and more.
+
+The module comes from the setup module, which gathers facts automatically at the start of a playbook run, unless you disable fact gathering.
 
 ## QUESTION C
 
@@ -134,6 +140,8 @@ How do we now remove the software we installed through the playbook above? Make 
 playbook remove the exact same software we previously installed. Call the created
 playbook `03-uninstall-software.yml`.
 
+To remove the software I changed ```state: present``` to ```state: absent```
+
 ## BONUS QUESTION
 
 What happens when you run `ansible-playbook` with different options?
@@ -142,6 +150,12 @@ Explain what each of these options do:
 * --verbose, -vv, -vvv, -vvvv
 * --check
 * --syntax-check
+
+* Verbose prints more debug messages and the more v's you add the more details you get in the messages
+
+* Check doesn't make any changes it tries to predict changes that may occur
+
+* Syntax check is exactly as it sounds it checks if all your syntax is correct and does not execute the playbook
 
 ## Study Material & Documentation
 
