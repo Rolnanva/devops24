@@ -28,6 +28,12 @@ is run.
 When you have run the playbook above successfully, how can you verify that the `mariadb`
 service is started and is running?
 
+Answer:
+
+To ensure that the MariaDB service is running I SSH into the DB Server and run `systemctl status mariadb`and look if it says ```Active: active (running)```
+
 # BONUS QUESTION
 
 How many different ways can use come up with to verify that the `mariadb` service is running?
+
+I can come up with two ways to verify mariadb running one would be like stated in the previous question and the other would be to look if port 3306 is open.

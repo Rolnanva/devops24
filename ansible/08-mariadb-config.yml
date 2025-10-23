@@ -1,0 +1,34 @@
+---
+- name: MariaDB
+  hosts: db
+  become: true
+  tasks:
+    - name: Ensure MariaDB-server is installed.
+      ansible.builtin.package:
+        name: mariadb-server
+        state: present
+
+    - name: Ensure MariaDB-server is running and enabled
+      ansible.builtin.service:
+        name: mariadb
+        enabled: true
+        state: started
+
+    - name: Ensure PyMySQL is installed
+      ansible.builtin.pip:
+        name: pymysql
+        state: present
+
+    - name: Create mariadb database
+      community.mysql.mysql_db:
+        name: webappdb
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock
+
+    - name: Create mariadb database user
+      community.mysql.mysql_user:
+        name: webappuser
+        password: secretpassword
+        priv: '*.*:ALL'
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock
