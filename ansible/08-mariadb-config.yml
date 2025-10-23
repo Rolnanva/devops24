@@ -15,8 +15,8 @@
         state: started
 
     - name: Ensure PyMySQL is installed
-      ansible.builtin.pip:
-        name: pymysql
+      ansible.builtin.package:
+        name: python3-PyMySQL
         state: present
 
     - name: Create mariadb database
