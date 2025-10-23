@@ -1,0 +1,50 @@
+---
+- name: Add index.html to nginx
+  hosts: web
+  become: true
+  tasks:
+    - name: Copy the https.conf files
+      ansible.builtin.copy:
+        src: files/https.conf
+        dest: /etc/nginx/conf.d/https.conf
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Print Ip adress
+      ansible.builtin.debug:
+        msg: j {{ ansible_default_ipv4.address }}
+      when: ansible_default_ipv4 is defined
+
+    - name: Template jinja file to nginx
+      ansible.builtin.template:
+        src: templates/example.internal.conf.j2
+        dest: /etc/nginx/conf.d/example.internal.conf
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create Directory structure for nginx html
+      ansible.builtin.file:
+        path: /var/www/example.internal/html/
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+        setype: httpd_sys_content_t
+
+    - name: Copy index.html to nginx html
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: /var/www/example.internal/html/index.html
+        mode: '0644'
+
+
+    - name: Ensure nginx is restarted and installed
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+    - name: Print the value of result
+      ansible.builtin.debug:
+        var: result
