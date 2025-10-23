@@ -1,0 +1,14 @@
+---
+- name: Copy https.conf to nginx configs
+  hosts: web
+  become: true
+  tasks:
+    - name: Copy the files
+      ansible.builtin.copy:
+        src: ~/Desktop/ansible/files/https.conf
+        dest: /etc/nginx/conf.d/https.conf
+        mode: '0700'
+    - name: Ensure nginx is restarted and installed
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
