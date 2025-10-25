@@ -1,0 +1,29 @@
+---
+- name: Setup users and groups
+  hosts: web
+  become: true
+  vars:
+    users:
+      - name: alovelace
+        groups: wheel,audio,video
+      - name: aturing
+        groups: tape
+      - name: edijkstra
+        groups: tcpdump
+      - name: ghopper
+        groups: wheel,audio
+  tasks:
+    - name: Create all users and divide into groups
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        state: present
+        groups: "{{ item.groups }}"
+      loop:
+        "{{ users }}"
+
+
+# * `alovelace` and `ghopper` should be added to the `wheel` group.
+# * `aturing` should be added to the `tape` group
+# * `edijkstra` should be added to the `tcpdump` group.
+# * `alovelace` should be added to the `audio` and `video` groups.
+# * `ghopper` should be in the `audio` group, but not in the `video` group.

@@ -1,0 +1,16 @@
+---
+- name: Copy md files from users to db
+  hosts: db
+  become: true
+  tasks:
+
+
+    - name: Copy the files to db
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/deploy"
+        owner: "root"
+        group: "root"
+        mode: "0655"
+      with_fileglob:
+        - "files/*.md"
