@@ -2,21 +2,15 @@
 - name: Setup users and groups
   hosts: web
   become: true
-  vars:
-    users:
-      - name: alovelace
-        groups: wheel,audio,video
-      - name: aturing
-        groups: tape
-      - name: edijkstra
-        groups: tcpdump
-      - name: ghopper
-        groups: wheel,audio
+  vars_files:
+    - secret.yml
+
   tasks:
     - name: Create all users and divide into groups
       ansible.builtin.user:
         name: "{{ item.name }}"
         state: present
+        password: "{{ item.password | password_hash('sha512') }}"
         groups: "{{ item.groups }}"
       loop:
         "{{ users }}"
