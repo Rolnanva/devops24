@@ -35,6 +35,8 @@
     owner: root
     group: root
     mode: '0755'
+  notify:
+    - Reload nginx
 
 - name: Create Directory structure for nginx html
   ansible.builtin.file:
@@ -51,12 +53,6 @@
     dest: /var/www/example.internal/html/index.html
     mode: '0644'
 
-
-- name: Ensure nginx is restarted and installed
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
-
 - name: Print the value of result
   ansible.builtin.debug:
     var: result
@@ -72,3 +68,4 @@
     groups: "{{ item.groups }}"
   loop:
     "{{ users }}"
+
