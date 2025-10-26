@@ -1,0 +1,61 @@
+---
+- name: Install and set up Node exporter
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy node exporter install to home
+      ansible.builtin.copy:
+        src: "node_exporter-1.10.2.linux-amd64.tar.gz"
+        dest: "/home/deploy"
+        owner: "root"
+        group: "root"
+        mode: "0655"
+
+    - name: Extract node exporter binary
+      ansible.builtin.unarchive:
+        src: /home/deploy/node_exporter-1.10.2.linux-amd64.tar.gz
+        dest: /home/deploy
+        owner: "root"
+        group: "root"
+        mode: "0655"
+        remote_src: true
+
+    - name: Create node exporter user
+      ansible.builtin.user:
+        name: node_exporter
+        shell: /usr/sbin/nologin
+        system: true
+
+    - name: Copy binary to appropriate location
+      ansible.builtin.copy:
+        src: /home/deploy/node_exporter-1.10.2.linux-amd64/node_exporter
+        dest: /usr/local/bin/node_exporter
+        owner: "root"
+        group: 'root'
+        mode: "0755"
+        remote_src: true
+
+    - name: Create node exporter service
+      ansible.builtin.copy:
+        src: "node_exporter.service"
+        dest: /etc/systemd/system/node_exporter.service
+        owner: "root"
+        group: "root"
+        mode: "0644"
+
+    - name: Enable tcp on the firewall
+      ansible.posix.firewalld:
+        port: 9100/tcp
+        permanent: true
+        state: enabled
+        immediate: true
+
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: true
+
+    - name: Enable and start node exporter service
+      ansible.builtin.systemd:
+        name: node_exporter
+        enabled: true
+        state: started

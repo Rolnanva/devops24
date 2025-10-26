@@ -68,4 +68,3 @@
     groups: "{{ item.groups }}"
   loop:
     "{{ users }}"
-
