@@ -1,0 +1,21 @@
+---
+- name: Security Compliance Checks
+  hosts: all
+  gather_facts: true
+  vars:
+    forbidden_packages:
+      - ftp
+      - openldap-clients
+      - ypbind
+      - telnet
+      - tftp
+    forbidden_services:
+      - avahi-daemon.service
+      - dhcp.service
+      - named.service
+      - dnsmasq.service
+      - smb.service
+
+
+  roles:
+    - cis_checks

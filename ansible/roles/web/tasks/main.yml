@@ -10,11 +10,6 @@
     name: nginx
     enabled: true
 
-- name: Ensure nginx is installed
-  ansible.builtin.package:
-    name: nginx
-    state: present
-
 - name: Copy the https.conf files
   ansible.builtin.copy:
     src: files/https.conf
