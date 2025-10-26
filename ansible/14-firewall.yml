@@ -1,0 +1,52 @@
+---
+- name: Configure firewall for webserver
+  hosts: web
+  become: true
+  tasks:
+    - name: Ensure necessary packages are installed
+      ansible.builtin.package:
+        name:
+          - python3-firewall
+          - firewalld
+        state: present
+
+    - name: Ensure firewalld is started and enabled
+      ansible.builtin.service:
+        name: firewalld
+        enabled: true
+        state: started
+
+    - name: Enable http and https
+      ansible.posix.firewalld:
+        service: "{{ item }}"
+        state: enabled
+        permanent: true
+        immediate: true
+      loop:
+        - http
+        - https
+
+
+- name: Configure firewall for db server
+  hosts: db
+  become: true
+  tasks:
+    - name: Ensure necessary packages are installed
+      ansible.builtin.package:
+        name:
+          - python3-firewall
+          - firewalld
+        state: present
+
+    - name: Ensure firewalld is started and enabled
+      ansible.builtin.service:
+        name: firewalld
+        enabled: true
+        state: started
+
+    - name: Enable mysql on firewall
+      ansible.posix.firewalld:
+        service: mysql
+        state: enabled
+        permanent: true
+        immediate: true
