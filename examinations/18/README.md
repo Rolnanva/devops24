@@ -81,5 +81,9 @@ Make the playbook use a default variable for the message that can be overriden b
 What is the relationship between the booleans you can use in Python, and the various "truthy/falsy" values
 you most often use in Ansible?
 
+The most notable difference between booleans in Python and Ansible is that in Python it is only True or False which is case sensetive while Ansible is case insensetive and can use both true or false and yes or no.
+
 What modules/filters are there in Ansible that can safely test for "truthy/falsy" values, and return something
 more stringent?
+
+One filter to test for truthy/falsey values is `| bool` which converts the value to a bool safely, there is also `| falsey`and `| truthy` which checks if the value is considered truthy or falsey.
