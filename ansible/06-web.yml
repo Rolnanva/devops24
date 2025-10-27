@@ -3,6 +3,12 @@
   hosts: web
   become: true
   tasks:
+
+    - name: Ensure nginx is installed
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
     - name: Copy the https.conf files
       ansible.builtin.copy:
         src: files/https.conf
@@ -39,6 +45,7 @@
     - name: Ensure nginx is restarted and installed
       ansible.builtin.service:
         name: nginx
+        enabled: true
         state: restarted
 
     - name: Print the value of result
